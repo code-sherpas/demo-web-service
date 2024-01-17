@@ -1,0 +1,71 @@
+server:
+  address: 0.0.0.0
+  port: ${PORT:8080}
+spring:
+  config:
+    import: optional:file:.env[.properties]
+  jpa:
+    properties:
+      hibernate:
+        show-sql: ${HIBERNATE_SHOW_SQL:true}
+    hibernate:
+      ddl-auto: none
+  datasource:
+    url: jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:5432}/${POSTGRES_DB:demo-web-service-db}
+    username: ${POSTGRES_USER:admin}
+    password: ${POSTGRES_PASSWORD:password}
+web-application:
+  base-url: ${WEB_APPLICATION_BASE_URL:http://local.app.demo.com:3000}
+  dashboard-path: /dashboard
+  report-path: /report
+tcla-model:
+  base-url: ${TCLA_MODEL_BASE_URL:http://localhost:8000}
+typeform:
+  base-url: ${TYPEFORM_BASE_URL:https://api.typeform.com}
+  access-token: ${TYPEFORM_ACCESS_TOKEN:tfp_2NNpUWKmLvzbjL6p3GjcoscV4bS1k91ZeyjLMD6qWjzP_3mMpDeNLm9TiAQ}
+  workspace: ${TYPEFORM_WORKSPACE:UfUy8X}
+  show-typeform-branding: ${TYPEFORM_SHOW_TYPEFORM_BRANDING:true}
+mailjet:
+  base-url: ${MAILJET_BASE_URL:https://api.mailjet.com/v3.1}
+  api-key: ${MAILJET_API_KEY:}
+  secret-key: ${MAILJET_SECRET_KEY:}
+  sandbox-mode: ${MAILJET_SANDBOX_MODE:true}
+auth0:
+  client-id: ${AUTH0_CLIENT_ID:86ESbGbyeDdaU0w25w9K0uhQ2PdqVA2x}
+  client-secret: ${AUTH0_CLIENT_SECRET:SUsBapDC-PIU6YmGFNuqPkTHtscMA9J4933DZO-clNj3vibli1GJ5qNybB12Kg8y}
+  domain: ${AUTH0_DOMAIN:dev-cqgsspdcqobxag1a.eu.auth0.com}
+  management-api-audience: ${AUTH0_MANAGEMENT_API_AUDIENCE:https://dev-cqgsspdcqobxag1a.eu.auth0.com/api/v2/}
+  get-access-token-url: ${AUTH0_GET_ACCESS_TOKEN_URL:https://dev-cqgsspdcqobxag1a.eu.auth0.com/oauth/token}
+  audience: ${AUTH0_AUDIENCE:https://tcla-web-service.onrender.com}
+  domain-with-scheme: ${AUTH0_DOMAIN_WITH_SCHEME:https://${auth0.domain}}
+stripe:
+  secret-key: ${STRIPE_SECRET_KEY:sk_test_51NH8OzFGwZX9WNMuTADMQZynbQsWcHmOXxhyzjAt6kWq5AzSJpFDBMQIQdUzy5Slf0EJtgQZScp425fN0D1lXkxx00kwcYulPL}
+  product-ids:
+    starter: ${STRIPE_PRODUCT_IDS_STARTER:prod_O3bPOfGQnSTrck}
+    professional: ${STRIPE_PRODUCT_IDS_PROFESSIONAL:prod_O3bQBxFovbvbrc}
+org:
+  jobrunr:
+    job-scheduler:
+      enabled: ${ORG_JOBRUNR_JOB_SCHEDULER_ENABLED:true}
+    jobs:
+      metrics:
+        enabled: false
+      default-number-of-retries: 0
+    database:
+      table-prefix: jobrunr.
+      skip-create: false
+    background-job-server:
+      enabled: ${ORG_JOBRUNR_BACKGROUND_JOB_SERVER_ENABLED:true}
+      worker-count: 1
+      poll-interval-in-seconds: 5
+      metrics:
+        enabled: false
+      delete-succeeded-jobs-after: 1m
+      permanently-delete-deleted-jobs-after: 3m
+    dashboard:
+      enabled: false # never set to true in production to prevent any user accessing the dashboard
+      port: 9000
+
+#sentry:
+#  dsn: ${SENTRY_DSN:}   # sentry dsn set in env variable so it is only active in production
+#  traces-sample-rate: 1.0 # Set traces-sample-rate to 1.0 to capture 100% of transactions for performance monitoring.

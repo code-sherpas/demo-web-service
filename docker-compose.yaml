@@ -1,0 +1,33 @@
+version: '3.9'
+
+services:
+  model:
+    image: empty
+    container_name: tcla-model
+    hostname: model
+    ports:
+      - "8000:8000"
+  postgres:
+    image: postgres:15.4
+    container_name: demo-web-service-db
+    hostname: postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: demo-web-service-db
+    ports:
+      - "5432:5432"
+  infrastructure:
+    image: empty
+    container_name: demo-infrastructure
+    hostname: infrastructure
+    environment:
+      PORT: 8080
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: demo-web-service-db
+    depends_on:
+      postgres:
+        condition: service_started
